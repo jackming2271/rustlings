@@ -10,7 +10,7 @@
 
 // Execute 'rustlings hint generics3' for hints!
 
-// I AM NOT DONE
+
 
 pub struct ReportCard {
     pub grade: f32,
@@ -20,8 +20,14 @@ pub struct ReportCard {
 
 impl ReportCard {
     pub fn print(&self) -> String {
-        format!("{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade)
+        if self.student_age > 11 {
+            format!("{} ({}) - achieved a grade of {}",
+                &self.student_name, &self.student_age, &self.grade)
+        }else{
+            format!("{} ({}) - achieved a grade of A+",
+            &self.student_name, &self.student_age)
+        }
+        
     }
 }
 
