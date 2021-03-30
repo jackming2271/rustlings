@@ -10,7 +10,7 @@ struct Person {
     age: usize,
 }
 
-// I AM NOT DONE
+
 
 // Steps:
 // 1. If the length of the provided string is 0, an error should be returned
@@ -21,13 +21,36 @@ struct Person {
 //    with something like `"4".parse::<usize>()`
 // 5. If while extracting the name and the age something goes wrong, an error should be returned
 // If everything goes well, then return a Result of a Person object
-
+impl Default for Person {
+    fn default() -> Person {
+        Person {
+            name: String::from("John"),
+            age: 30,
+        }
+    }
+}
 impl FromStr for Person {
     type Err = String;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        let mut s = s.to_string();
+        let vec:Vec<&str> = s.split(",").collect();
+        if vec.len() != 2 || vec[0].len() == 0 || vec[1].len() == 0{
+            return Err("err".to_string());
+        }
+        Ok(Person{
+            name: vec[0].to_string(), 
+            age:  {
+                match vec[1].parse::<usize>() {
+                    Ok(name) => name,
+                    Err(err) => {
+                        return Err("err".to_string());
+                    },
+                }
+            }
+        })
     }
+    
 }
-
 fn main() {
     let p = "Mark,20".parse::<Person>().unwrap();
     println!("{:?}", p);
